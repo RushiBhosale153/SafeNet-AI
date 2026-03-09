@@ -39,4 +39,7 @@ coverage/
 # Misc
 .cache/
 .temp/
-.tmp/
+.tmp/-e 
+# Environment files
+*.env
+*.env.*
