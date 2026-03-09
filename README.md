@@ -4,13 +4,34 @@ SafeNet AI is a full-stack cybersecurity platform that helps users detect potent
 
 ## Features
 
-- Email Breach Checker (LeakCheck API)
-- Website Malware Scanner (VirusTotal API)
-- Phishing Message Detector
-- AI Cybersecurity Assistant
-- Secure Authentication with Email OTP
-- Scan History Dashboard
-- Dark Cybersecurity UI Theme
+🔐 Secure Authentication with Email OTP  
+🛡 Phishing Message Detection  
+🌐 Website Malware Scanner (VirusTotal API)  
+📧 Email Breach Checker (LeakCheck API)  
+🤖 AI Cybersecurity Assistant  
+📊 Scan History Dashboard  
+🌙 Dark Cybersecurity Theme
+
+## Project Structure
+
+CyberNet-AI
+│
+├── backend
+│   ├── routes
+│   ├── models
+│   ├── middleware
+│   └── utils
+│
+├── frontend
+│   ├── src
+│   │   ├── pages
+│   │   ├── services
+│   │   └── components
+│
+├── .env.example
+├── README.md
+├── SETUP_GUIDE.md
+└── ACCESS_GUIDE.md
 
 ## Tech Stack
 
@@ -30,6 +51,25 @@ Security APIs
 - LeakCheck
 - OpenRouter AI
 - Resend Email API
+
+## Architecture
+
+Frontend
+- React
+- Tailwind CSS
+
+Backend
+- Node.js
+- Express.js
+
+Database
+- MongoDB Atlas
+
+External APIs
+- VirusTotal
+- LeakCheck
+- OpenRouter
+- Resend Email
 
 ## Installation
 
