@@ -44,7 +44,9 @@ const LeakChecker = () => {
   };
 
   const getRiskIcon = (level) => {
-    if (level === 'safe') return <FaCheckCircle className="text-cyber-green" />;
+    if (level === 'safe') {
+      return <FaCheckCircle className="text-cyber-green" />;
+    }
     return <FaExclamationTriangle className={`text-${getRiskColor(level)}`} />;
   };
 
@@ -69,6 +71,7 @@ const LeakChecker = () => {
               <label className="block text-cyber-blue font-bold mb-2">
                 Email Address
               </label>
+
               <input
                 type="email"
                 data-testid="email-input"
@@ -77,7 +80,7 @@ const LeakChecker = () => {
                 className="w-full bg-cyber-black border-2 border-cyber-blue rounded-lg p-4 text-white focus:outline-none focus:border-cyber-green transition-colors"
                 placeholder="your@email.com"
               />
-              
+
               <div className="bg-cyber-blue/10 border border-cyber-blue rounded-lg p-3 mt-3">
                 <p className="text-gray-300 text-sm">
                   🔒 <strong>Privacy Notice:</strong> Your email is NOT stored. We only save scan metadata.
@@ -97,14 +100,20 @@ const LeakChecker = () => {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg mb-6" data-testid="error-message">
+            <div
+              className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg mb-6"
+              data-testid="error-message"
+            >
               {error}
             </div>
           )}
 
           {/* Results */}
           {result && !result.error && (
-            <div className="bg-cyber-darker border-2 border-cyber-green rounded-lg p-6" data-testid="check-results">
+            <div
+              className="bg-cyber-darker border-2 border-cyber-green rounded-lg p-6"
+              data-testid="check-results"
+            >
               <h2 className="text-2xl font-bold text-cyber-green mb-4 flex items-center">
                 <MdSecurity className="mr-2" />
                 Breach Check Results
@@ -117,14 +126,21 @@ const LeakChecker = () => {
                     <span className="text-gray-400 font-bold">Risk Level:</span>
                     <div className="flex items-center space-x-2">
                       {getRiskIcon(result.riskLevel)}
-                      <span className={`text-${getRiskColor(result.riskLevel)} font-bold uppercase text-xl`} data-testid="risk-level">
-                        {result.riskLevel}
+                      <span
+                        className={`text-${getRiskColor(result.riskLevel)} font-bold uppercase text-xl`}
+                        data-testid="risk-level"
+                      >
+                        {result.riskLevel || 'unknown'}
                       </span>
                     </div>
                   </div>
+
                   <div className="flex justify-between items-center">
                     <span className="text-gray-400 font-bold">Breaches Found:</span>
-                    <span className="text-cyber-red font-bold text-3xl" data-testid="breach-count">
+                    <span
+                      className="text-cyber-red font-bold text-3xl"
+                      data-testid="breach-count"
+                    >
                       {result.breachCount || 0}
                     </span>
                   </div>
@@ -134,12 +150,29 @@ const LeakChecker = () => {
                 {result.sources && result.sources.length > 0 && (
                   <div className="bg-cyber-black border border-cyber-red rounded-lg p-4">
                     <h3 className="text-cyber-red font-bold mb-3">Breach Sources:</h3>
+
                     <div className="space-y-2" data-testid="breach-sources">
                       {result.sources.map((source, index) => (
-                        <div key={index} className="bg-cyber-darker border border-cyber-red/50 rounded p-3">
-                          <div className="text-gray-300">
-                            🚨 <strong className="text-cyber-red">{source}</strong>
-                          </div>
+                        <div
+                          key={index}
+                          className="bg-cyber-darker border border-cyber-red/50 rounded p-3"
+                        >
+                          {typeof source === 'string' ? (
+                            <div className="text-gray-300">
+                              🚨 <strong className="text-cyber-red">{source}</strong>
+                            </div>
+                          ) : (
+                            <div className="text-gray-300">
+                              <p>
+                                🚨 <strong className="text-cyber-red">
+                                  {source?.name || 'Unknown Source'}
+                                </strong>
+                              </p>
+                              <p className="text-sm text-gray-400 mt-1">
+                                Breach Date: {source?.date || 'Unknown Date'}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
@@ -149,8 +182,10 @@ const LeakChecker = () => {
                 {/* Advice */}
                 <div className="bg-cyber-black border border-cyber-green rounded-lg p-4">
                   <h3 className="text-cyber-green font-bold mb-2">Recommendation:</h3>
-                  <p className="text-gray-300" data-testid="security-advice">{result.advice}</p>
-                  
+                  <p className="text-gray-300" data-testid="security-advice">
+                    {result.advice || 'No advice available.'}
+                  </p>
+
                   {result.breachCount > 0 && (
                     <div className="mt-4 space-y-2">
                       <p className="text-cyber-blue font-bold">Immediate Actions:</p>
@@ -168,7 +203,10 @@ const LeakChecker = () => {
           )}
 
           {result && result.error && (
-            <div className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg" data-testid="api-error-message">
+            <div
+              className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg"
+              data-testid="api-error-message"
+            >
               <strong>Error:</strong> {result.error}
               {result.details && <p className="mt-2 text-sm">{result.details}</p>}
             </div>
