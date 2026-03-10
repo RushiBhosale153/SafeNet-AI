@@ -8,13 +8,6 @@ This project demonstrates practical implementation of **cybersecurity concepts, 
 
 ---
 
-## 📸 Project Preview
-
-![SafeNet AI Screenshot](assets/dashboard.png)
-
-*(Add a screenshot of your application inside the `assets` folder)*
-
----
 
 # 🚀 Features
 
