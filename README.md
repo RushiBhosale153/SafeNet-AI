@@ -1,222 +1,235 @@
-SafeNet AI – Cybersecurity Threat Detection Platform 🛡️
+# SafeNet AI – Cybersecurity Threat Detection Platform 🛡️
 
-SafeNet AI is a full-stack cybersecurity web application that helps users detect common online threats such as phishing messages, malicious websites, and leaked email credentials.
+SafeNet AI is a **full-stack cybersecurity web application** that helps users detect common online threats such as **phishing messages, malicious websites, and leaked email credentials**.
 
-The platform integrates threat intelligence APIs and AI-powered analysis to provide users with real-time security insights and recommendations.
+The platform integrates **threat intelligence APIs and AI-powered analysis** to provide users with real-time security insights and recommendations.
 
-This project demonstrates practical implementation of cybersecurity concepts, API integrations, and full-stack development using modern technologies.
+This project demonstrates practical implementation of **cybersecurity concepts, API integrations, and full-stack development using modern technologies**.
 
-Project Preview
+---
 
-(Add a screenshot of your application inside the assets folder)
+## 📸 Project Preview
 
-Features
-Secure User Authentication
+![SafeNet AI Screenshot](assets/dashboard.png)
 
-Email registration with password encryption
+*(Add a screenshot of your application inside the `assets` folder)*
 
-OTP email verification system
+---
 
-JWT-based secure session management
+# 🚀 Features
 
-Phishing Message Scanner
+## 🔐 Secure User Authentication
+- Email registration with password encryption
+- OTP email verification system
+- JWT-based secure session management
 
+---
+
+## 🕵️ Phishing Message Scanner
 Detect suspicious or malicious messages using pattern analysis.
 
-Features:
+**Features**
+- Phishing keyword detection
+- Risk scoring system
+- Security advice for users
 
-Phishing keyword detection
+---
 
-Risk scoring system
+## 🌐 Website Malware Scanner
+Check if a website is malicious using **VirusTotal API**.
 
-Security advice for users
+**Features**
+- Detect malicious URLs
+- Identify suspicious websites
+- Report security engine results
 
-Website Malware Scanner
+---
 
-Check if a website is malicious using threat intelligence from VirusTotal.
+## 📧 Email Breach Checker
+Check if an email address has been exposed in known data breaches using **LeakCheck API**.
 
-Features:
+**Features**
+- Detect breached accounts
+- Show breach sources
+- Provide security recommendations
 
-Detect malicious URLs
+---
 
-Identify suspicious websites
-
-Report security engine results
-
-Email Breach Checker
-
-Check if an email address has been exposed in known data breaches using LeakCheck API.
-
-Features:
-
-Detect breached accounts
-
-Show breach sources
-
-Provide security recommendations
-
-AI Cybersecurity Assistant
-
+## 🤖 AI Cybersecurity Assistant
 Integrated AI assistant that helps users understand cybersecurity threats and provides security guidance.
 
-Scan History Dashboard
+---
 
+## 📊 Scan History Dashboard
 Users can view previous scans and results securely.
 
-Privacy protection:
+**Privacy Protection**
+- Scan metadata stored
+- Sensitive user input not stored
 
-Scan metadata stored
+---
 
-Sensitive user input not stored
+# 🛠 Tech Stack
 
-Tech Stack
-Frontend
+## Frontend
+- React.js
+- Tailwind CSS
+- React Icons
 
-React.js
+## Backend
+- Node.js
+- Express.js
+- JWT Authentication
+- bcrypt Password Encryption
 
-Tailwind CSS
+## Database
+- MongoDB Atlas
 
-React Icons
+## External APIs
+- VirusTotal API
+- LeakCheck API
+- OpenRouter AI
+- Resend Email API
 
-Backend
+---
 
-Node.js
+# 🏗 System Architecture
 
-Express.js
+SafeNet AI follows a **three-layer architecture**.
 
-JWT Authentication
+### Frontend Layer
+React-based user interface.
 
-bcrypt Password Encryption
-
-Database
-
-MongoDB Atlas
-
-External APIs
-
-VirusTotal API (Malicious website detection)
-
-LeakCheck API (Email breach detection)
-
-OpenRouter AI (Cybersecurity assistant)
-
-Resend Email API (OTP verification)
-
-System Architecture
-
-SafeNet AI follows a three-layer architecture.
-
-Frontend Layer
-React-based UI for user interaction.
-
-Backend Layer
+### Backend Layer
 Node.js REST APIs handling authentication, scanning logic, and security checks.
 
-Database Layer
-MongoDB Atlas stores user accounts and scan metadata securely.
+### Database Layer
+MongoDB Atlas storing user data and scan metadata.
 
-Project Structure
+---
+
+# 📂 Project Structure
+
 CyberNet-AI
 │
 ├── backend
-│   ├── middleware
-│   ├── models
-│   ├── routes
-│   ├── utils
-│   └── server.js
+│ ├── middleware
+│ ├── models
+│ ├── routes
+│ ├── utils
+│ └── server.js
 │
 ├── frontend
-│   ├── src
-│   │   ├── pages
-│   │   ├── components
-│   │   └── services
+│ ├── src
+│ │ ├── pages
+│ │ ├── components
+│ │ └── services
 │
 ├── assets
-│   └── dashboard.png
+│ └── dashboard.png
 │
 ├── .env.example
 ├── README.md
 ├── SETUP_GUIDE.md
 ├── ACCESS_GUIDE.md
 └── PROJECT_SUMMARY.md
-Installation Guide
-1 Clone the Repository
-git clone https://github.com/YOUR_USERNAME/CyberNet-AI.git
+
+
+---
+
+# ⚙ Installation Guide
+
+## 1 Clone Repository
+
+```bash
+git clone https://github.com/RushiBhosale153/CyberNet-AI.git
 cd CyberNet-AI
+
+
+
 2 Setup Backend
 cd backend
 npm install
 
-Create a .env file using .env.example.
+----------------------------------------
+Create .env using .env.example
 
 Example:
 
 PORT=5000
 MONGO_URI=your_mongodb_connection
+
 JWT_SECRET=your_secret
 
-EMAIL_SERVICE_KEY=your_resend_api_key
+EMAIL_SERVICE_KEY=your_resend_key
 VIRUSTOTAL_API_KEY=your_virustotal_key
 LEAKCHECK_API_KEY=your_leakcheck_key
-OPENROUTER_API_KEY=your_ai_api_key
+OPENROUTER_API_KEY=your_ai_key
 
-Start backend:
+----------------------------------------
+--------------------
 
+Start backend
 npm start
+
+--------------------
+--------------------
+
 3 Setup Frontend
 cd frontend
 npm install
 npm start
 
-Frontend will run on:
 
+Frontend runs at:
 http://localhost:3000
 
-Backend runs on:
-
+Backend runs at:
 http://localhost:5000
-Security Practices Implemented
 
-Password hashing with bcrypt
+🔒 Security Practices
 
-JWT authentication
+- Password hashing using bcrypt
 
-OTP email verification
+- JWT authentication
 
-Input validation and sanitization
+- Email OTP verification
 
-Secure environment variables
+- Input validation and sanitization
 
-Sensitive files excluded using .gitignore
+- Environment variables for API keys
 
-Privacy Notice
+- .env protected using .gitignore
 
-SafeNet AI prioritizes user privacy.
 
-The system does not store sensitive scan inputs such as:
+🔐 Privacy Notice
 
-scanned messages
+- SafeNet AI prioritizes user privacy.
 
-scanned URLs
+- The system does not store sensitive scan inputs such as:
 
-scanned email addresses
+- scanned messages
 
-Only scan metadata is stored for user history.
+- scanned URLs
 
-Future Improvements
+- scanned email addresses
 
-Potential enhancements include:
+- Only scan metadata is stored.
 
-Machine learning based phishing detection
 
-Browser extension for phishing protection
+🚀 Future Improvements
 
-Real-time threat intelligence integration
+- Machine learning phishing detection
 
-Dark web credential monitoring
+- Browser extension for phishing protection
 
-Advanced AI cybersecurity assistant
+- Dark web credential monitoring
 
-License
+- Advanced AI threat analysis
 
-This project is licensed under the MIT License.
+- Real-time cybersecurity alerts
+
+
+📜 License
+MIT License
+
