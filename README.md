@@ -132,9 +132,8 @@ CyberNet-AI
 
 # ⚙ Installation Guide
 
-## 1 Clone Repository
-
 ```bash
+1 Clone Repository
 git clone https://github.com/RushiBhosale153/CyberNet-AI.git
 cd CyberNet-AI
 
