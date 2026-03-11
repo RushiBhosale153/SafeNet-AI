@@ -70,7 +70,6 @@ router.post('/phishing/file', authMiddleware, upload.single('file'), async (req,
     } else if (mimeType.startsWith('image/')) {
       try {
         const result = await Tesseract.recognize(req.file.buffer, 'eng', {
-          logger: m => console.log(m)
         });
         extractedText = result.data.text;
       } catch (err) {

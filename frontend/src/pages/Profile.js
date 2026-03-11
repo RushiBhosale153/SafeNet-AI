@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { historyAPI } from '../services/api';
-import { FaUser, FaHistory, FaShieldAlt, FaExclamationTriangle, FaChevronDown, FaCheckCircle, FaBug, FaEnvelope, FaGlobe, FaChevronRight, FaTerminal, FaFilePdf, FaFileCsv, FaFileCode, FaDownload } from 'react-icons/fa';
+import { FaUser, FaHistory, FaShieldAlt, FaExclamationTriangle, FaChevronDown, FaBug, FaEnvelope, FaGlobe, FaChevronRight, FaTerminal, FaFilePdf, FaFileCsv, FaFileCode } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { motion, AnimatePresence } from 'framer-motion';
 import { exportToPDF, exportToJSON, exportToCSV, normalizeReportData } from '../utils/exportUtils';
