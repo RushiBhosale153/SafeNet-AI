@@ -25,20 +25,40 @@ const scanWebsite = async (url) => {
 
     const analysisId = submitResponse.data.data.id;
 
-    // Wait a moment for analysis
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    // Poll for analysis results
+    let maxAttempts = 10; // Wait up to 30 seconds
+    let isCompleted = false;
+    let stats = null;
 
-    // Get analysis results
-    const analysisResponse = await axios.get(
-      `https://www.virustotal.com/api/v3/analyses/${analysisId}`,
-      {
-        headers: {
-          'x-apikey': apiKey
+    while (maxAttempts > 0 && !isCompleted) {
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
+      const analysisResponse = await axios.get(
+        `https://www.virustotal.com/api/v3/analyses/${analysisId}`,
+        {
+          headers: {
+            'x-apikey': apiKey
+          }
         }
-      }
-    );
+      );
 
-    const stats = analysisResponse.data.data.attributes.stats;
+      const status = analysisResponse.data.data.attributes.status;
+      if (status === 'completed') {
+        isCompleted = true;
+        stats = analysisResponse.data.data.attributes.stats;
+      }
+
+      maxAttempts--;
+    }
+
+    if (!stats) {
+      // If still not completed after polling, we can't provide accurate results
+      return {
+        error: 'Analysis took too long. Please try scanning again later.',
+        riskLevel: 'unknown'
+      };
+    }
+
     const maliciousCount = stats.malicious || 0;
     const suspiciousCount = stats.suspicious || 0;
     const totalEngines = Object.values(stats).reduce((a, b) => a + b, 0);
@@ -62,7 +82,7 @@ const scanWebsite = async (url) => {
       totalEngines,
       riskLevel,
       stats,
-      permalink: analysisResponse.data.data.links.self
+      permalink: `https://www.virustotal.com/gui/url/${analysisId}`
     };
   } catch (error) {
     console.error('VirusTotal API error:', error.response?.data || error.message);

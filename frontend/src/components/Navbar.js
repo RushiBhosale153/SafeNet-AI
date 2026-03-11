@@ -26,15 +26,19 @@ const Navbar = () => {
   ] : [];
 
   return (
-    <nav className="bg-cyber-darker border-b-2 border-cyber-blue shadow-cyber sticky top-0 z-50">
+    <nav className="glass border-b border-cyber-blue/30 sticky top-0 z-50 cyber-glow-blue">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group" data-testid="logo-link">
-            <FaShieldAlt className="text-3xl text-cyber-blue group-hover:text-cyber-green transition-colors" />
-            <span className="text-2xl font-bold text-cyber-blue group-hover:text-cyber-green transition-colors font-mono">
-              SafeNet AI
+          <Link to="/" className="flex items-center space-x-3 group relative" data-testid="logo-link">
+            <div className="relative">
+              <FaShieldAlt className="text-4xl text-cyber-blue group-hover:text-cyber-green transition-all duration-500 scale-110" />
+              <div className="absolute inset-0 bg-cyber-blue/20 blur-lg rounded-full group-hover:bg-cyber-green/20 transition-all"></div>
+            </div>
+            <span className="text-2xl font-bold text-cyber-blue group-hover:text-cyber-green transition-all duration-500 tracking-tighter uppercase">
+              SafeNet <span className="text-white">AI</span>
             </span>
+            <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-cyber-blue to-transparent group-hover:w-full transition-all duration-500"></div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -44,19 +48,22 @@ const Navbar = () => {
                 const Icon = link.icon;
                 const isActive = location.pathname === link.path;
                 return (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
-                    className={`flex items-center space-x-1 px-3 py-2 rounded-lg transition-all ${
-                      isActive
-                        ? 'bg-cyber-blue text-cyber-black font-bold'
-                        : 'text-cyber-blue hover:bg-cyber-blue hover:bg-opacity-20'
-                    }`}
-                  >
-                    <Icon className="text-lg" />
-                    <span className="text-sm">{link.label}</span>
-                  </Link>
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      data-testid={`nav-${link.label.toLowerCase().replace(' ', '-')}`}
+                      className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-all duration-300 relative group/link ${
+                        isActive
+                          ? 'text-cyber-green font-bold'
+                          : 'text-gray-400 hover:text-cyber-blue'
+                      }`}
+                    >
+                      <Icon className={`text-lg transition-transform group-hover/link:-translate-y-1 ${isActive ? 'animate-pulse' : ''}`} />
+                      <span className="text-xs uppercase tracking-widest font-bold">{link.label}</span>
+                      {isActive && (
+                        <div className="absolute -bottom-1 left-0 w-full h-[2px] bg-cyber-green shadow-[0_0_10px_#00ff41]"></div>
+                      )}
+                    </Link>
                 );
               })}
             </div>

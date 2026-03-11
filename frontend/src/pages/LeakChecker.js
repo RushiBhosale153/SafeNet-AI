@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { scanAPI } from '../services/api';
-import { FaEnvelope, FaExclamationTriangle, FaCheckCircle } from 'react-icons/fa';
+import { FaEnvelope, FaExclamationTriangle, FaCheckCircle, FaSearch, FaHistory } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 
 const LeakChecker = () => {
@@ -33,21 +33,14 @@ const LeakChecker = () => {
 
   const getRiskColor = (level) => {
     const colors = {
-      safe: 'cyber-green',
-      low: 'yellow-400',
-      medium: 'orange-400',
-      high: 'cyber-red',
-      critical: 'red-600',
-      unknown: 'gray-400'
+      safe: 'text-cyber-green',
+      low: 'text-yellow-400',
+      medium: 'text-orange-400',
+      high: 'text-cyber-red',
+      critical: 'text-red-600',
+      unknown: 'text-gray-400'
     };
-    return colors[level] || 'gray-400';
-  };
-
-  const getRiskIcon = (level) => {
-    if (level === 'safe') {
-      return <FaCheckCircle className="text-cyber-green" />;
-    }
-    return <FaExclamationTriangle className={`text-${getRiskColor(level)}`} />;
+    return colors[level] || 'text-gray-400';
   };
 
   return (
@@ -55,160 +48,171 @@ const LeakChecker = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <FaEnvelope className="text-6xl text-cyber-purple mx-auto mb-4 animate-pulse-slow" />
-            <h1 className="text-4xl font-bold text-cyber-blue font-mono" data-testid="page-title">
-              Email Leak Checker
+          <div className="text-center mb-10">
+            <div className="relative inline-block mb-4">
+              <FaEnvelope className="text-7xl text-cyber-purple animate-pulse-slow relative z-10" />
+              <div className="absolute inset-0 bg-cyber-purple/20 blur-2xl rounded-full"></div>
+            </div>
+            <h1 className="text-5xl font-bold text-white tracking-widest uppercase mb-4">
+              Leak <span className="text-cyber-purple">Sentry</span>
             </h1>
-            <p className="text-gray-400 mt-2">
-              Check if your email has been compromised in data breaches
+            <p className="text-gray-500 font-mono text-sm tracking-widest uppercase">
+              [BREACH_DATABASE_SEARCH_ACTIVE]
             </p>
           </div>
 
           {/* Check Form */}
-          <div className="bg-cyber-darker border-2 border-cyber-blue rounded-lg p-6 mb-6">
+          <div className="glass border border-cyber-blue/30 rounded-2xl p-8 mb-8 relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent opacity-50"></div>
             <form onSubmit={handleCheck}>
-              <label className="block text-cyber-blue font-bold mb-2">
-                Email Address
-              </label>
+              <div className="flex justify-between items-end mb-4">
+                <label className="block text-cyber-blue text-xs font-bold uppercase tracking-widest">
+                  Target Identity (Email)
+                </label>
+                <div className="flex items-center space-x-2 text-[10px] text-gray-600 font-mono uppercase">
+                   <span className="w-1.5 h-1.5 bg-cyber-purple rounded-full animate-pulse"></span>
+                   <span>Private_Channel</span>
+                </div>
+              </div>
 
-              <input
-                type="email"
-                data-testid="email-input"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-cyber-black border-2 border-cyber-blue rounded-lg p-4 text-white focus:outline-none focus:border-cyber-green transition-colors"
-                placeholder="your@email.com"
-              />
+              <div className="relative group/input mb-6">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <FaSearch className="text-gray-600 group-focus-within/input:text-cyber-purple transition-colors" />
+                </div>
+                <input
+                  type="email"
+                  data-testid="email-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-black/60 border-2 border-cyber-blue/20 rounded-xl py-4 pl-12 pr-6 text-white font-mono text-sm focus:outline-none focus:border-cyber-purple transition-all duration-500"
+                  placeholder="agent@identity.sh"
+                />
+              </div>
 
-              <div className="bg-cyber-blue/10 border border-cyber-blue rounded-lg p-3 mt-3">
-                <p className="text-gray-300 text-sm">
-                  🔒 <strong>Privacy Notice:</strong> Your email is NOT stored. We only save scan metadata.
+              <div className="glass border border-cyber-blue/20 rounded-xl p-4 mb-6 bg-black/40">
+                <p className="text-gray-500 text-[10px] font-mono leading-relaxed uppercase tracking-tight">
+                  🔒 ACCESS_PROTOCOL: Your identity string is NOT stored on local nodes. 
+                  Direct lookup performed against distributed breach repositories.
                 </p>
               </div>
 
               <button
                 type="submit"
                 data-testid="check-button"
-                disabled={loading}
-                className="mt-4 w-full bg-cyber-blue text-cyber-black font-bold py-3 rounded-lg hover:bg-cyber-green transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-cyber"
+                disabled={loading || !email.trim()}
+                className="w-full bg-cyber-purple text-white font-bold py-4 rounded-xl hover:bg-white hover:text-black transition-all duration-500 disabled:opacity-30 disabled:cursor-not-allowed uppercase tracking-widest text-sm shadow-[0_0_20px_#a855f766]"
               >
-                {loading ? 'Checking...' : 'Check for Breaches'}
+                {loading ? 'Interrogating Databases...' : 'Execute Breach Lookup'}
               </button>
             </form>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div
-              className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg mb-6"
-              data-testid="error-message"
-            >
-              {error}
+            <div className="bg-cyber-red/10 border border-cyber-red/30 text-cyber-red px-6 py-4 rounded-xl mb-8 flex items-center animate-shake" data-testid="error-message">
+              <FaExclamationTriangle className="mr-3 text-xl" />
+              <div className="font-mono text-xs uppercase tracking-tight">REP_ERR: {error}</div>
             </div>
           )}
 
-          {/* Results */}
-          {result && !result.error && (
-            <div
-              className="bg-cyber-darker border-2 border-cyber-green rounded-lg p-6"
-              data-testid="check-results"
-            >
-              <h2 className="text-2xl font-bold text-cyber-green mb-4 flex items-center">
-                <MdSecurity className="mr-2" />
-                Breach Check Results
-              </h2>
-
-              <div className="space-y-4">
-                {/* Risk Level */}
-                <div className="bg-cyber-black border border-cyber-blue rounded-lg p-4">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="text-gray-400 font-bold">Risk Level:</span>
-                    <div className="flex items-center space-x-2">
-                      {getRiskIcon(result.riskLevel)}
-                      <span
-                        className={`text-${getRiskColor(result.riskLevel)} font-bold uppercase text-xl`}
-                        data-testid="risk-level"
-                      >
-                        {result.riskLevel || 'unknown'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-400 font-bold">Breaches Found:</span>
-                    <span
-                      className="text-cyber-red font-bold text-3xl"
-                      data-testid="breach-count"
-                    >
-                      {result.breachCount || 0}
-                    </span>
-                  </div>
+          {/* Results Section - Terminal UI */}
+          {(loading || (result && !result.error)) && (
+            <div className="glass border border-cyber-purple/40 rounded-xl overflow-hidden shadow-2xl" data-testid="check-results">
+              {/* Terminal Header */}
+              <div className="bg-cyber-purple/20 px-6 py-3 border-b border-cyber-purple/30 flex justify-between items-center">
+                <div className="flex space-x-2">
+                  <div className="w-2 h-2 rounded-full bg-cyber-red"></div>
+                  <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                  <div className="w-2 h-2 rounded-full bg-cyber-green"></div>
                 </div>
+                <div className="text-[10px] font-mono text-cyber-purple uppercase font-bold tracking-widest">
+                  IDENTITY_INTELL_MODULE.rep
+                </div>
+                <div className="w-10"></div>
+              </div>
 
-                {/* Breach Sources */}
-                {result.sources && result.sources.length > 0 && (
-                  <div className="bg-cyber-black border border-cyber-red rounded-lg p-4">
-                    <h3 className="text-cyber-red font-bold mb-3">Breach Sources:</h3>
-
-                    <div className="space-y-2" data-testid="breach-sources">
-                      {result.sources.map((source, index) => (
-                        <div
-                          key={index}
-                          className="bg-cyber-darker border border-cyber-red/50 rounded p-3"
-                        >
-                          {typeof source === 'string' ? (
-                            <div className="text-gray-300">
-                              🚨 <strong className="text-cyber-red">{source}</strong>
-                            </div>
-                          ) : (
-                            <div className="text-gray-300">
-                              <p>
-                                🚨 <strong className="text-cyber-red">
-                                  {source?.name || 'Unknown Source'}
-                                </strong>
-                              </p>
-                              <p className="text-sm text-gray-400 mt-1">
-                                Breach Date: {source?.date || 'Unknown Date'}
-                              </p>
-                            </div>
-                          )}
+              {/* Terminal Body */}
+              <div className="p-8 bg-black/90 font-mono min-h-[350px]">
+                {loading ? (
+                  <div className="space-y-4">
+                     <p className="text-cyber-purple text-xs"><span className="text-gray-600">[0.00]</span> Handshake established with LeakCheck mainframes...</p>
+                     <p className="text-cyber-purple text-xs"><span className="text-gray-600">[0.42]</span> Indexing 14.2B records...</p>
+                     <p className="text-cyber-purple text-xs"><span className="text-gray-600">[1.15]</span> Cross-referencing target identity...</p>
+                     <p className="text-cyber-purple text-xs animate-pulse font-bold tracking-[0.2em] mt-8 flex items-center gap-3">
+                        <span className="w-2 h-2 bg-cyber-purple rounded-full animate-ping"></span>
+                        Searching_Darknet_Aggregators...
+                     </p>
+                  </div>
+                ) : result && (
+                  <div className="animate-in fade-in duration-700">
+                     <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-10 border-b border-cyber-purple/20 pb-10">
+                        <div className="flex-1">
+                           <div className="text-[10px] text-gray-500 uppercase tracking-widest mb-2 font-bold">Identity_String</div>
+                           <div className="text-cyber-purple text-xl font-black tracking-tight">{email}</div>
                         </div>
-                      ))}
-                    </div>
+                        <div className="text-center md:text-right">
+                           <div className="text-[10px] text-gray-500 uppercase tracking-widest mb-1 font-bold">Threat_Level</div>
+                           <div className={`text-3xl font-black uppercase tracking-widest ${getRiskColor(result.riskLevel)}`} data-testid="risk-level">
+                              {result.riskLevel || 'UNKNOWN'}
+                           </div>
+                        </div>
+                     </div>
+
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        <div className="glass border border-cyber-purple/20 p-8 rounded-2xl text-center relative overflow-hidden group">
+                           <div className="absolute inset-0 bg-cyber-purple/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                           <div className={`text-6xl font-black mb-2 ${result.breachCount > 0 ? 'text-cyber-red' : 'text-cyber-green'}`} data-testid="breach-count">
+                              {result.breachCount || 0}
+                           </div>
+                           <div className="text-[10px] text-gray-500 uppercase font-black tracking-[0.3em]">Known_Breach_Points</div>
+                        </div>
+                        
+                        <div className="space-y-4">
+                           <h4 className="text-xs font-bold text-cyber-purple uppercase tracking-[0.2em] mb-4 flex items-center">
+                              <MdSecurity className="mr-2" />
+                              Containment Advisory
+                           </h4>
+                           <div className="text-xs text-gray-300 leading-relaxed bg-black/40 p-5 rounded-xl border border-cyber-purple/10 border-l-2 border-l-cyber-purple italic">
+                              {result.advice || 'Wait for full intelligence report.'}
+                           </div>
+                        </div>
+                     </div>
+
+                     {result.sources && result.sources.length > 0 && (
+                       <div className="mb-10">
+                          <h4 className="text-xs font-bold text-cyber-red uppercase tracking-[0.2em] mb-6 flex items-center">
+                             <FaHistory className="mr-2" />
+                             Breached Sub-Sectors Detected
+                          </h4>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" data-testid="breach-sources">
+                             {result.sources.map((source, index) => (
+                               <div key={index} className="glass border border-cyber-red/20 p-5 rounded-xl hover:border-cyber-red/50 transition-all group">
+                                  <div className="flex items-start gap-4">
+                                     <div className="text-cyber-red text-xl opacity-50 group-hover:opacity-100">🚨</div>
+                                     <div>
+                                        <div className="text-sm font-bold text-white uppercase tracking-tight">{typeof source === 'string' ? source : (source.name || 'Unknown')}</div>
+                                        {source.date && <div className="text-[10px] text-gray-500 font-mono mt-1 uppercase">Date: {source.date}</div>}
+                                     </div>
+                                  </div>
+                               </div>
+                             ))}
+                          </div>
+                       </div>
+                     )}
+
+                     <div className="p-6 glass border border-cyber-green/20 rounded-xl">
+                        <div className="text-[10px] text-cyber-green font-bold uppercase tracking-[0.2em] mb-4">Recommended Recovery Protocol</div>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-3">
+                           {['Terminate compromised sessions', 'Execute 2FA deployment', 'Rotate all cryptographic keys', 'Enable audit logging'].map((step, i) => (
+                             <li key={i} className="text-[11px] text-gray-400 flex items-center gap-2">
+                                <span className="text-cyber-green">▶</span> {step}
+                             </li>
+                           ))}
+                        </ul>
+                     </div>
                   </div>
                 )}
-
-                {/* Advice */}
-                <div className="bg-cyber-black border border-cyber-green rounded-lg p-4">
-                  <h3 className="text-cyber-green font-bold mb-2">Recommendation:</h3>
-                  <p className="text-gray-300" data-testid="security-advice">
-                    {result.advice || 'No advice available.'}
-                  </p>
-
-                  {result.breachCount > 0 && (
-                    <div className="mt-4 space-y-2">
-                      <p className="text-cyber-blue font-bold">Immediate Actions:</p>
-                      <ul className="list-disc list-inside space-y-1 text-gray-300 text-sm">
-                        <li>Change passwords for all affected accounts immediately</li>
-                        <li>Enable two-factor authentication (2FA) where available</li>
-                        <li>Monitor your accounts for suspicious activity</li>
-                        <li>Consider using a password manager</li>
-                      </ul>
-                    </div>
-                  )}
-                </div>
               </div>
-            </div>
-          )}
-
-          {result && result.error && (
-            <div
-              className="bg-cyber-red/20 border border-cyber-red text-cyber-red px-4 py-3 rounded-lg"
-              data-testid="api-error-message"
-            >
-              <strong>Error:</strong> {result.error}
-              {result.details && <p className="mt-2 text-sm">{result.details}</p>}
             </div>
           )}
         </div>

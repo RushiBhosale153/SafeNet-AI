@@ -26,6 +26,9 @@ export const authAPI = {
 // Scan APIs
 export const scanAPI = {
   phishing: (message) => api.post('/api/scan/phishing', { message }),
+  phishingFile: (formData) => api.post('/api/scan/phishing/file', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  }),
   website: (url) => api.post('/api/scan/website', { url }),
   leakCheck: (email) => api.post('/api/scan/leak-check', { email })
 };
@@ -37,7 +40,8 @@ export const aiAPI = {
 
 // History API
 export const historyAPI = {
-  getHistory: () => api.get('/api/history')
+  getHistory: () => api.get('/api/history'),
+  seedDemo: () => api.post('/api/history/seed-demo')
 };
 
 // Help Desk API

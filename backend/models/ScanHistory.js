@@ -9,19 +9,25 @@ const scanHistorySchema = new mongoose.Schema({
   scanType: {
     type: String,
     required: true,
-    enum: ['phishing', 'website', 'leak-check']
+    enum: ['phishing', 'phishing-file', 'website', 'leak-check']
   },
   riskLevel: {
     type: String,
     required: true,
-    enum: ['low', 'medium', 'high', 'critical', 'safe']
+    enum: ['low', 'medium', 'high', 'critical', 'safe', 'unknown']
   },
   result: {
+    type: String
+  },
+  target: {
     type: String
   },
   timestamp: {
     type: Date,
     default: Date.now
+  },
+  details: {
+    type: Object
   }
 });
 

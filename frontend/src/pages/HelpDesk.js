@@ -64,6 +64,12 @@ const HelpDesk = () => {
               <div>
                 <p className="font-bold">Ticket Submitted Successfully!</p>
                 <p className="text-sm">Our support team will get back to you soon.</p>
+                <button 
+                  onClick={() => setSuccess(false)}
+                  className="mt-3 bg-cyber-green text-cyber-black px-4 py-2 rounded font-bold text-xs hover:bg-cyber-blue transition-colors"
+                >
+                  Submit Another Ticket
+                </button>
               </div>
             </div>
           )}

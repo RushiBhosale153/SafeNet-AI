@@ -22,9 +22,14 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="flex flex-col min-h-screen bg-cyber-black">
+        <div className="flex flex-col min-h-screen bg-cyber-black relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0 cyber-grid animate-grid pointer-events-none"></div>
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyber-blue/5 rounded-full blur-[120px] pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-cyber-green/5 rounded-full blur-[120px] pointer-events-none"></div>
+          
           <Navbar />
-          <main className="flex-grow">
+          <main className="flex-grow relative z-10">
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Home />} />

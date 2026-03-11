@@ -48,7 +48,7 @@ router.post('/chat', authMiddleware, async (req, res) => {
     const response = await axios.post(
       'https://openrouter.ai/api/v1/chat/completions',
       {
-        model: 'meta-llama/llama-3.1-8b-instruct:free',
+        model: 'openrouter/free',
         messages: messages
       },
       {
@@ -66,7 +66,7 @@ router.post('/chat', authMiddleware, async (req, res) => {
     res.json({
       success: true,
       message: aiMessage,
-      model: 'meta-llama/llama-3.1-8b-instruct'
+      model: 'openrouter/free'
     });
   } catch (error) {
     console.error('AI chat error:', error.response?.data || error.message);

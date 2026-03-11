@@ -2,7 +2,9 @@ const phishingKeywords = [
   'urgent', 'verify', 'suspend', 'account', 'security', 'alert', 'click here',
   'confirm', 'password', 'bank', 'payment', 'prize', 'winner', 'congratulations',
   'claim', 'expire', 'immediately', 'act now', 'limited time', 'verify account',
-  'update payment', 'unusual activity', 'locked', 'suspended'
+  'update payment', 'unusual activity', 'locked', 'suspended', 'invoice',
+  'shipping', 'delivery', 'amazon', 'netflix', '2fa', 'otp', 'gift card',
+  'refund', 'unauthorized', 'action required', 'login attempt'
 ];
 
 const suspiciousPatterns = [
@@ -38,10 +40,18 @@ const detectPhishing = (message) => {
   }
 
   // Check for urgency indicators
-  const urgencyWords = ['urgent', 'immediately', 'act now', 'expire'];
+  const urgencyWords = ['urgent', 'immediately', 'act now', 'expire', 'asap', 'within 24 hours'];
   urgencyWords.forEach(word => {
     if (messageLower.includes(word)) {
       riskScore += 8;
+    }
+  });
+
+  // Check for money-related scam patterns
+  const moneyPatterns = [/\$/, /amount/, /refund/, /payment/];
+  moneyPatterns.forEach(pattern => {
+    if (messageLower.match(pattern)) {
+      riskScore += 5;
     }
   });
 
@@ -51,6 +61,9 @@ const detectPhishing = (message) => {
     riskScore += 10;
     detectedThreats.push('Excessive use of capital letters');
   }
+
+  // Cap risk score at 100
+  riskScore = Math.min(riskScore, 100);
 
   // Determine risk level
   let riskLevel;
