@@ -68,10 +68,12 @@ router.post(
       */
       const emailResult = await sendOTPEmail(email, otp);
 
+      const isDev = process.env.NODE_ENV === 'development';
+      
       // If email service unavailable OR failed → show development OTP
-      if (emailResult.mockOTP || emailResult.success === false) {
+      if (emailResult.mockOTP || emailResult.success === false || isDev) {
         return res.status(201).json({
-          message: 'User registered. Email could not be sent, using development OTP.',
+          message: isDev ? 'User registered (Development Mode). Code sent to console/screen.' : 'User registered. Email could not be sent, using development OTP.',
           userId: user._id,
           developmentOTP: otp
         });
@@ -86,7 +88,7 @@ router.post(
       console.error('Registration error:', error);
 
       res.status(500).json({
-        error: 'Registration failed'
+        error: error.message || 'Registration failed'
       });
     }
   }
@@ -154,7 +156,7 @@ router.post('/verify-otp', async (req, res) => {
     console.error('OTP verification error:', error);
 
     res.status(500).json({
-      error: 'Verification failed'
+      error: error.message || 'Verification failed'
     });
   }
 });
@@ -192,9 +194,11 @@ router.post('/resend-otp', async (req, res) => {
 
     const emailResult = await sendOTPEmail(user.email, otp);
 
-    if (emailResult.mockOTP || emailResult.success === false) {
+    const isDev = process.env.NODE_ENV === 'development';
+
+    if (emailResult.mockOTP || emailResult.success === false || isDev) {
       return res.json({
-        message: 'OTP resent (development mode)',
+        message: isDev ? 'OTP resent (Development Mode)' : 'OTP resent (fallback mode)',
         developmentOTP: otp
       });
     }
@@ -207,7 +211,7 @@ router.post('/resend-otp', async (req, res) => {
     console.error('Resend OTP error:', error);
 
     res.status(500).json({
-      error: 'Failed to resend OTP'
+      error: error.message || 'Failed to resend OTP'
     });
   }
 });
@@ -244,9 +248,11 @@ router.post(
       }
 
       if (!user.isVerified) {
+        const isDev = process.env.NODE_ENV === 'development';
         return res.status(403).json({
           error: 'Email not verified. Please verify your email first.',
-          userId: user._id
+          userId: user._id,
+          developmentOTP: isDev ? user.otp : undefined
         });
       }
 
@@ -277,7 +283,7 @@ router.post(
       console.error('Login error:', error);
 
       res.status(500).json({
-        error: 'Login failed'
+        error: error.message || 'Login failed'
       });
     }
   }

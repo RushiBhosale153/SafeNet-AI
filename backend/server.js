@@ -15,10 +15,10 @@ const connectDB = async () => {
   try {
     if (!process.env.MONGODB_URI) {
       console.log('⚠️  MONGODB_URI not set in environment variables');
-      console.log('Please set MONGODB_URI in backend/.env file');
       return;
     }
 
+    console.log('📡 Connecting to MongoDB...');
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('✅ MongoDB connected successfully');
   } catch (error) {
@@ -28,6 +28,12 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+const PORT = 5000;
+app.listen(PORT, '::', () => {
+  console.log(`🚀 SafeNet AI Backend running on port ${PORT} (Dual-Stack)`);
+  console.log(`📡 API available at http://localhost:${PORT}`);
+});
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
@@ -73,9 +79,3 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Route not found' });
 });
 
-const PORT = process.env.PORT || 8001;
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 SafeNet AI Backend running on port ${PORT}`);
-  console.log(`📡 API available at http://localhost:${PORT}`);
-});

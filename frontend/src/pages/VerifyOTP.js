@@ -14,6 +14,7 @@ const VerifyOTP = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [resending, setResending] = useState(false);
+  const [devOTP, setDevOTP] = useState(developmentOTP);
 
   React.useEffect(() => {
     if (!userId) {
@@ -48,8 +49,13 @@ const VerifyOTP = () => {
     setError('');
 
     try {
-      await authAPI.resendOTP(userId);
-      alert('New OTP sent to your email!');
+      const response = await authAPI.resendOTP(userId);
+      if (response.data.developmentOTP) {
+        setDevOTP(response.data.developmentOTP);
+        alert('Development Mode: New code generated and visible on screen.');
+      } else {
+        alert('New OTP sent to your email!');
+      }
     } catch (err) {
       setError('Failed to resend OTP. Please try again.');
     } finally {
@@ -65,10 +71,10 @@ const VerifyOTP = () => {
           <h2 className="text-3xl font-bold text-cyber-blue font-mono" data-testid="verify-title">Verify Your Email</h2>
           <p className="text-gray-400 mt-2">Enter the 6-digit code sent to</p>
           <p className="text-cyber-green font-bold mt-1" data-testid="email-display">{email}</p>
-          {developmentOTP && (
+          {devOTP && (
             <div className="mt-4 bg-cyber-blue/20 border border-cyber-blue rounded-lg p-3">
               <p className="text-cyber-blue text-sm font-bold">Development Mode</p>
-              <p className="text-cyber-green text-xl font-mono" data-testid="dev-otp">OTP: {developmentOTP}</p>
+              <p className="text-cyber-green text-xl font-mono" data-testid="dev-otp">OTP: {devOTP}</p>
             </div>
           )}
         </div>

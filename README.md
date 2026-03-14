@@ -88,8 +88,8 @@ graph TD
 ### 2. Installation
 ```bash
 # Clone
-git clone https://github.com/RushiBhosale153/CyberNet-AI.git
-cd CyberNet-AI
+git clone https://github.com/RushiBhosale153/SafeNet-AI.git
+cd SafeNet-AI
 
 # Install Backend
 cd backend && npm install

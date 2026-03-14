@@ -22,7 +22,7 @@ const otxService = require('../services/otxService');
 
 const fs = require('fs');
 const multer = require('multer');
-const pdfParse = require('pdf-parse');
+// const pdfParse = require('pdf-parse'); // Moved to lazy load in the route handler
 const Tesseract = require('tesseract.js');
 
 // Configure multer for memory storage
@@ -75,7 +75,8 @@ router.post('/phishing/file', authMiddleware, upload.single('file'), async (req,
 
     if (mimeType === 'application/pdf') {
       try {
-        const data = await pdfParse(req.file.buffer);
+        const lazyPdfParse = require('pdf-parse');
+        const data = await lazyPdfParse(req.file.buffer);
         extractedText = data.text;
       } catch (err) {
         console.error('PDF Parse Error:', err);

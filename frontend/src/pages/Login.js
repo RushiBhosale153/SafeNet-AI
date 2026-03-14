@@ -27,7 +27,8 @@ const Login = () => {
         navigate('/verify-otp', { 
           state: { 
             userId: err.response.data.userId,
-            email: email
+            email: email,
+            developmentOTP: err.response.data.developmentOTP
           } 
         });
       } else {

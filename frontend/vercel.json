@@ -1,4 +1,5 @@
 {
+  "name": "safenet-ai",
   "version": 2,
   "public": true,
   "rewrites": [

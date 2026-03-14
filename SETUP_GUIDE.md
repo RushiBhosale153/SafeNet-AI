@@ -14,8 +14,8 @@ This guide covers the technical setup for local development of SafeNet AI.
 
 ### 1. Repository Preparation
 ```bash
-git clone https://github.com/RushiBhosale153/CyberNet-AI.git
-cd CyberNet-AI
+git clone https://github.com/RushiBhosale153/SafeNet-AI.git
+cd SafeNet-AI
 ```
 
 ### 2. Backend Environment
