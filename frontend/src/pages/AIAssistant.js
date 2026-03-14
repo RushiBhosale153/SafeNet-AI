@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { aiAPI } from '../services/api';
-import { FaRobot, FaUser, FaPaperPlane, FaShieldAlt, FaTrash } from 'react-icons/fa';
+import { FaRobot, FaUser, FaPaperPlane, FaTrash } from 'react-icons/fa';
 
 const AIAssistant = () => {
   const [messages, setMessages] = useState(() => {

@@ -3,8 +3,22 @@ const router = express.Router();
 const authMiddleware = require('../middleware/auth');
 const ScanHistory = require('../models/ScanHistory');
 const { detectPhishing } = require('../utils/phishingDetector');
-const { scanWebsite } = require('../utils/virusTotal');
+const { scanWebsite } = require('../utils/virusTotal'); // Keep for legacy if needed, but we'll use services
 const { checkEmailBreach } = require('../utils/leakCheck');
+
+// New Services & Utils
+const normalizeUrl = require('../utils/normalizeUrl');
+const validateUrl = require('../utils/validateUrl');
+const resolveIp = require('../utils/resolveIp');
+const { calculateRiskScore, calculateConfidence, getVerdict, getSummary } = require('../utils/calculateRiskScore');
+const formatThreatResponse = require('../utils/formatThreatResponse');
+
+const virusTotalService = require('../services/virusTotalService');
+const googleSafeBrowsingService = require('../services/googleSafeBrowsingService');
+const urlscanService = require('../services/urlscanService');
+const phishTankService = require('../services/phishTankService');
+const abuseIpdbService = require('../services/abuseIpdbService');
+const otxService = require('../services/otxService');
 
 const fs = require('fs');
 const multer = require('multer');
@@ -110,7 +124,7 @@ router.post('/phishing/file', authMiddleware, upload.single('file'), async (req,
   }
 });
 
-// Website Scanner (VirusTotal)
+// Website & URL Multi-Source Threat Intelligence Scanner
 router.post('/website', authMiddleware, async (req, res) => {
   try {
     const { url } = req.body;
@@ -119,36 +133,79 @@ router.post('/website', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'URL is required' });
     }
 
-    // Basic URL validation
-    try {
-      new URL(url);
-    } catch {
+    // 1. Normalize and Validate
+    const normalizedUrl = normalizeUrl(url);
+    if (!validateUrl(normalizedUrl)) {
       return res.status(400).json({ error: 'Invalid URL format' });
     }
 
-    const result = await scanWebsite(url);
+    const domain = new URL(normalizedUrl).hostname;
 
-    if (!result.error) {
-      // Save to scan history
+    // 2. Resolve IP and Prep Metadata
+    const ip = await resolveIp(normalizedUrl);
+    
+    // 3. Execute all services in parallel
+    const results = await Promise.allSettled([
+      virusTotalService(normalizedUrl),
+      googleSafeBrowsingService(normalizedUrl),
+      urlscanService(normalizedUrl),
+      phishTankService(normalizedUrl),
+      abuseIpdbService(ip),
+      otxService('domain', domain)
+    ]);
+
+    // 4. Map results back to sources
+    const sourceResults = {
+      virustotal: results[0].status === 'fulfilled' ? results[0].value : { status: 'error', message: 'Service failure' },
+      googleSafeBrowsing: results[1].status === 'fulfilled' ? results[1].value : { status: 'error', message: 'Service failure' },
+      urlscan: results[2].status === 'fulfilled' ? results[2].value : { status: 'error', message: 'Service failure' },
+      phishTank: results[3].status === 'fulfilled' ? results[3].value : { status: 'error', message: 'Service failure' },
+      abuseIpdb: results[4].status === 'fulfilled' ? results[4].value : { status: 'error', message: 'Service failure' },
+      otx: results[5].status === 'fulfilled' ? results[5].value : { status: 'error', message: 'Service failure' }
+    };
+
+    // 5. Calculate Score and Verdict
+    const riskScore = calculateRiskScore(sourceResults);
+    const confidence = calculateConfidence(sourceResults);
+    const finalVerdict = getVerdict(riskScore);
+    
+    // Collect reasons
+    const reasons = [];
+    Object.values(sourceResults).forEach(res => {
+      if (res.status === 'flagged' && res.reason) {
+        reasons.push(res.reason);
+      }
+    });
+
+    const summary = getSummary(riskScore, reasons, confidence);
+
+    const fullResponse = formatThreatResponse(url, { normalizedUrl, domain, ip }, sourceResults, {
+      riskScore,
+      finalVerdict,
+      summary,
+      reasons,
+      confidence
+    });
+
+    // 6. Save to Scan History
+    try {
       await ScanHistory.create({
         userId: req.userId,
         scanType: 'website',
-        riskLevel: result.riskLevel,
-        result: `Malicious: ${result.maliciousCount}, Suspicious: ${result.suspiciousCount}`,
+        riskLevel: finalVerdict.toLowerCase(),
+        result: `Score: ${riskScore}, Verdict: ${finalVerdict}`,
         target: url,
-        details: result
+        details: fullResponse
       });
+    } catch (dbError) {
+      console.error('Failed to save scan history:', dbError.message);
+      // Don't fail the request if DB save fails
     }
 
-    res.json({
-      success: !result.error,
-      scanType: 'website',
-      url: url,
-      ...result
-    });
+    res.json(fullResponse);
   } catch (error) {
-    console.error('Website scan error:', error);
-    res.status(500).json({ error: 'Scan failed' });
+    console.error('Multi-source Website scan error:', error);
+    res.status(500).json({ error: 'Scan failed due to internal error' });
   }
 });
 

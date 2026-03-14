@@ -1,42 +1,34 @@
 # ⚙️ SafeNet AI Setup Guide
 
-Follow this guide to get your local development environment up and running.
+This guide covers the technical setup for local development of SafeNet AI.
 
 ## 🛠 Prerequisites
-- **Node.js**: v18.0.0 or higher
-- **Package Manager**: npm (v9+)
-- **Database**: A MongoDB Atlas cluster (free tier works)
-- **Git**: For cloning the repository
+
+- **Node.js**: v18.x or v20.x (LTS recommended)
+- **MongoDB**: A local instance or a free cluster at [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+- **Git**: For cloning and version control
 
 ---
 
-## 🚀 Step-by-Step Installation
+## 🚀 Installation Steps
 
-### 1. Clone the Repository
+### 1. Repository Preparation
 ```bash
 git clone https://github.com/RushiBhosale153/CyberNet-AI.git
 cd CyberNet-AI
 ```
 
-### 2. Backend Configuration
-The backend handles API routing, authentication, and security integrations.
-
+### 2. Backend Environment
+The backend handles the orchestration of threat intelligence providers.
 ```bash
 cd backend
 npm install
+cp .env.example .env
 ```
+*Note: You must fill in the `.env` file with your own API keys for the scanner to function correctly.*
 
-**Environment Variables (`backend/.env`):**
-Copy `.env.example` to `.env` and fill in the following:
-- `MONGODB_URI`: Your Atlas connection string.
-- `JWT_SECRET`: A long, random string for token signing.
-- `VIRUSTOTAL_API_KEY`: Obtain from [VirusTotal](https://www.virustotal.com/gui/my-apikey).
-- `LEAKCHECK_API_KEY`: Obtain from [LeakCheck](https://leakcheck.io/).
-- `GEMINI_API_KEY`: Obtain from [Google AI Studio](https://aistudio.google.com/).
-
-### 3. Frontend Configuration
+### 3. Frontend Environment
 The frontend provides the interactive user dashboard.
-
 ```bash
 cd ../frontend
 npm install
@@ -46,31 +38,31 @@ npm install
 
 ## 🏃 Running the Servers
 
-### Start the Backend
-Execute this in the `backend/` directory:
+### Developer Mode (Local)
+
+**Terminal 1: Backend**
 ```bash
+cd backend
 npm run dev
 ```
-*Port: 5000 (Default)*
 
-### Start the Frontend
-Execute this in the `frontend/` directory:
+**Terminal 2: Frontend**
 ```bash
+cd frontend
 npm start
 ```
-*Port: 3000 (Default)*
 
 ---
 
-## ✅ Post-Installation Checks
-1. Navigate to `http://localhost:3000`.
-2. Register a new account.
-3. Check the "Engagement Log" to ensure the database connection is active.
-4. Run a "Safe" website scan (e.g., google.com) to verify VirusTotal integration.
+## ✅ Post-Setup Checklist
 
----
+1. **Auth**: Register a new user and login.
+2. **Scanner**: Run a test scan for `google.com`.
+3. **Breach**: Enter an email to verify LeakCheck integration.
+4. **Logs**: Ensure the "Engagement Log" displays your scan history.
 
-## 🛠 Troubleshooting
-- **CORS Error**: Ensure the backend's `ALLOWED_ORIGIN` matches your frontend URL.
-- **Port Conflict**: If port 3000 is taken, update the `PORT` in your frontend environment.
-- **DB Connection**: Verify that your IP is whitelisted in the MongoDB Atlas Network Access settings.
+## ⚠️ Common Issues
+
+- **CORS Errors**: If the backend is on a different port than 5000, update `REACT_APP_BACKEND_URL` in your frontend environment.
+- **Service Failures**: If a provider shows "Error", verify your API key in the backend `.env`.
+- **GSB 403**: Ensure "Safe Browsing API" is enabled in your Google Cloud Console.

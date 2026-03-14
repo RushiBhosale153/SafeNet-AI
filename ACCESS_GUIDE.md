@@ -1,47 +1,48 @@
 # 🔑 SafeNet AI Access & User Guide
 
-This guide explains how to access the various modules of the SafeNet AI platform once the application is running.
+This guide explains how to access and utilize the SafeNet AI security modules.
 
 ---
 
 ## 📍 Access Points
 
-| Component | Local URL | Description |
+| Component | URL (Local) | Description |
 | :--- | :--- | :--- |
-| **User Dashboard** | `http://localhost:3000` | The primary entry point for all security tools. |
-| **Backend API** | `http://localhost:5000/api` | The API root (requires JWT for most routes). |
-| **API Health Check** | `http://localhost:5000/api/health` | Verify if the backend is responsive. |
+| **User Dashboard** | `http://localhost:3000` | Primary entry point for all security tools. |
+| **Backend API** | `http://localhost:5000` | The core orchestration engine. |
 
 ---
 
-## 🛡️ Getting Started
+## 🛡️ Quick Start Guide
 
-### 1. Account Creation
-Navigate to the Register page. You will need to:
-- Provide a valid email.
-- Verify your account via an OTP (Check local console logs if email service is not configured).
-- Set a secure password.
+### 1. Unified Security Dashboard
+Navigate to the Home page after logging in. You can access all modules via the sidebar or the central feature cards:
+- **Phishing Scanner**: Analyze messages and upload screenshots.
+- **Website Scanner**: The main hub for multi-source URL intelligence.
+- **Breach Checker**: Real-time identification leak analysis.
 
-### 2. Scanning Tools
-Once logged in, you can access the following modules from the sidebar or dashboard:
-
-- **Phishing Scanner**: Paste text or upload screenshots for real-time analysis.
-- **Website Scanner**: Enter any URL to check against 70+ global security engines.
-- **Breach Checker**: Enter an email to see if it's part of any known data leaks.
-- **AI Protocol**: Consult the integrated AI for customized security advice.
-
-### 3. Engagement Log
-Your history is tracked in the **Profile** section.
-- View previous scan results.
-- **Expand Cards**: Click on any log entry to see the full technical breakdown.
-- **Export Data**: Download reports in PDF, CSV, or JSON format instantly.
+### 2. Utilizing the Multi-Source Scanner
+1. Go to the **Website Scanner** page.
+2. Enter a URL (e.g., `https://google.com`).
+3. View the **Risk Gauge** for an immediate verdict.
+4. Scroll down to see the **Intelligence Source Breakdown**.
+5. Read the **AI-Powered Summary** for a plain-English explanation of why the result was generated.
 
 ---
 
-## 🚦 Endpoint References (For Developers)
+## 📊 Viewing History & Reports
 
-- `POST /api/auth/register` - Create account
-- `POST /api/auth/login` - Authenticate & receive JWT
-- `POST /api/scan/phishing` - Submit text/file for phishing scan
-- `POST /api/scan/website` - Submit URL for malware scan
-- `GET /api/history` - Retrieve your personal scan history
+- All scans are saved to the **Engagement Log** (linked to your MongoDB cluster).
+- Click on any log entry to view the **Source breakdownUI**.
+- Click **Export** to download the results in **PDF**, **CSV**, or **JSON** format.
+
+---
+
+## 🛠 Developer API Endpoints
+
+- `POST /api/auth/register` - Create user account
+- `POST /api/auth/login` - Authenticate & obtain JWT
+- `POST /api/scan/website` - Execute multi-source URL scan
+- `POST /api/scan/phishing` - Execute text-based phishing analysis
+- `POST /api/scan/leak-check` - Execute email breach check
+- `GET /api/history` - Retrieve authenticated scan history

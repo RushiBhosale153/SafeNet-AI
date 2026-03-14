@@ -1,0 +1,19 @@
+{
+  "gsb": {
+    "status": "error",
+    "message": "Service failure"
+  },
+  "phishtank": {
+    "status": "error",
+    "message": "Service failure",
+    "diag": "getaddrinfo ENOTFOUND check.phishtank.com"
+  },
+  "urlscan": {
+    "status": "flagged",
+    "score": 100,
+    "brands": [
+      "testbrand"
+    ],
+    "reason": "Flagged as malicious by behavioral analysis on urlscan.io"
+  }
+}
