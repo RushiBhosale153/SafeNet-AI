@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { scanAPI } from '../services/api';
-import { FaEnvelope, FaExclamationTriangle, FaCheckCircle, FaSearch, FaHistory } from 'react-icons/fa';
+import { FaEnvelope, FaExclamationTriangle, FaSearch, FaHistory } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 
 const LeakChecker = () => {

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { FaShieldAlt } from 'react-icons/fa';
 import { MdVerifiedUser } from 'react-icons/md';
 
 const VerifyOTP = () => {

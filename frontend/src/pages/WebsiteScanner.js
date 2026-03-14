@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { scanAPI } from '../services/api';
 import { 
   FaGlobe, FaExclamationTriangle, FaSearch, 
-  FaFilePdf, FaFileCsv, FaFileCode, FaShieldAlt,
+  FaFilePdf, FaShieldAlt,
   FaServer, FaBug, FaInfoCircle, FaLink
 } from 'react-icons/fa';
 import { MdSecurity, MdHistory } from 'react-icons/md';
-import { exportToPDF, exportToJSON, exportToCSV } from '../utils/exportUtils';
+import { exportToPDF } from '../utils/exportUtils';
 
 const WebsiteScanner = () => {
   const [url, setUrl] = useState('');

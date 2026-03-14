@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { authAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { FaEnvelope, FaLock, FaShieldAlt } from 'react-icons/fa';
@@ -10,7 +10,6 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const location = useLocation();
   const { login } = useAuth();
 
   const handleSubmit = async (e) => {

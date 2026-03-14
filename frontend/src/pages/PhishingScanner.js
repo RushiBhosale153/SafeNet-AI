@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { scanAPI } from '../services/api';
 import { FaBug, FaExclamationTriangle, FaCheckCircle, FaFileUpload, FaTimes, FaFilePdf, FaFileCsv, FaFileCode } from 'react-icons/fa';
-import { MdSecurity } from 'react-icons/md';
 import { exportToPDF, exportToJSON, exportToCSV, normalizeReportData } from '../utils/exportUtils';
 
 const PhishingScanner = () => {

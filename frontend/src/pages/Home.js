@@ -4,19 +4,19 @@ import { useAuth } from '../context/AuthContext';
 import { FaShieldAlt, FaBug, FaGlobe, FaEnvelope, FaRobot } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 
+const securityTips = [
+  "✅ Use unique passwords for every account with a manager like Bitwarden or 1Password.",
+  "🛡️ Enable Two-Factor Authentication (2FA) wherever possible—preferably with an app.",
+  "🕵️ Hover over links in emails before clicking to verify the actual destination URL.",
+  "📱 Keep your operating system and apps updated to patch critical security gaps.",
+  "🏢 Be cautious about sharing personal information on public Wi-Fi networks.",
+  "🔒 Regularlly check your credit reports for unauthorized activity or accounts.",
+  "📧 Treat 'Urgent' or 'Immediate Action Required' emails with extreme suspicion."
+];
+
 const Home = () => {
   const { isAuthenticated } = useAuth();
   const [currentTip, setCurrentTip] = useState('');
-
-  const securityTips = [
-    "✅ Use unique passwords for every account with a manager like Bitwarden or 1Password.",
-    "🛡️ Enable Two-Factor Authentication (2FA) wherever possible—preferably with an app.",
-    "🕵️ Hover over links in emails before clicking to verify the actual destination URL.",
-    "📱 Keep your operating system and apps updated to patch critical security gaps.",
-    "🏢 Be cautious about sharing personal information on public Wi-Fi networks.",
-    "🔒 Regularlly check your credit reports for unauthorized activity or accounts.",
-    "📧 Treat 'Urgent' or 'Immediate Action Required' emails with extreme suspicion."
-  ];
 
   useEffect(() => {
     // Pick a tip based on the day of the year for consistent 'Daily Tip' behavior
@@ -69,7 +69,7 @@ const Home = () => {
               SafeNet <span className="text-cyber-blue drop-shadow-[0_0_20px_#00ffff]">AI</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-400 mb-8 font-mono tracking-widest uppercase italic">
-              // Advanced Cybersecurity OS 2.0
+              {"// Advanced Cybersecurity OS 2.0"}
             </p>
             <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-3xl mx-auto leading-relaxed">
               Experience the next generation of threat detection. Powered by advanced artificial intelligence and distributed security engines.
