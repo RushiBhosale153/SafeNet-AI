@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">
           <p className="text-cyber-blue text-sm font-bold tracking-widest uppercase mb-1">
-            © 2026 SafeNet AI
+            © 2026 CyberNet AI
           </p>
           <p className="text-gray-500 text-xs italic">
             Next-Gen Cybersecurity Powered by Artificial Intelligence.

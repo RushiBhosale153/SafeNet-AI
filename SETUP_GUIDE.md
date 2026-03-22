@@ -1,6 +1,6 @@
-# ⚙️ SafeNet AI Setup Guide
+# ⚙️ CyberNet AI Setup Guide
 
-This guide covers the technical setup for local development of SafeNet AI.
+This guide covers the technical setup for local development of CyberNet AI.
 
 ## 🛠 Prerequisites
 

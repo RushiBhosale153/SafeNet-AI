@@ -4,15 +4,25 @@ const phishingKeywords = [
   'claim', 'expire', 'immediately', 'act now', 'limited time', 'verify account',
   'update payment', 'unusual activity', 'locked', 'suspended', 'invoice',
   'shipping', 'delivery', 'amazon', 'netflix', '2fa', 'otp', 'gift card',
-  'refund', 'unauthorized', 'action required', 'login attempt'
+  'refund', 'unauthorized', 'action required', 'login attempt', 'bit.ly',
+  't.co', 'goo.gl', 'security update', 'billing issue', 're-verify',
+  'parcel', 'tracking', 'tax refund', 'irs', 'hmrc', 'whatsapp', 'telegram',
+  'crypto', 'wallet', 'binance', 'coinbase', 'metamask', 'airdrop'
 ];
 
 const suspiciousPatterns = [
-  /https?:\/\/[^\s]+/gi, // URLs
-  /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, // Email addresses
-  /\b\d{16}\b/g, // Credit card numbers
-  /password/gi,
-  /ssn|social security/gi
+  { regex: /https?:\/\/[^\s]+/gi, name: 'URL Link' },
+  { regex: /\b[A-Z0-9._%+-]+@(?!(google|microsoft|amazon|apple|paypal)\.com)[A-Z0-9.-]+\.[A-Z]{2,}\b/gi, name: 'External Email' },
+  { regex: /\b\d{16}\b/g, name: 'Potential Card Number' },
+  { regex: /password|credential|secret|key/gi, name: 'Sensitive Keyword' },
+  { regex: /%[0-9A-F]{2}/gi, name: 'URL Encoding' },
+  { regex: /\.{2,}/g, name: 'Suspicious Dots' },
+  { regex: /(@|!|\$|&|\?){3,}/g, name: 'Excessive Symbols' }
+];
+
+const suspiciousTLDs = [
+  '.xyz', '.top', '.pw', '.buzz', '.monster', '.icu', '.work', '.click', '.zip',
+  '.casa', '.bid', '.gdn', '.loan', '.mom', '.men', '.live', '.today', '.rocks'
 ];
 
 const detectPhishing = (message) => {
@@ -29,15 +39,20 @@ const detectPhishing = (message) => {
   });
 
   // Check for suspicious patterns
-  if (message.match(/https?:\/\/[^\s]+/gi)) {
-    riskScore += 15;
-    detectedThreats.push('Contains URL links');
-  }
+  suspiciousPatterns.forEach(pattern => {
+    if (message.match(pattern.regex)) {
+      riskScore += 12;
+      detectedThreats.push(`Structural anomaly: ${pattern.name} detected`);
+    }
+  });
 
-  if (message.match(/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi)) {
-    riskScore += 5;
-    detectedThreats.push('Contains email address');
-  }
+  // Check for suspicious TLDs if URL exists
+  suspiciousTLDs.forEach(tld => {
+    if (messageLower.includes(tld)) {
+      riskScore += 20;
+      detectedThreats.push(`High-risk domain extension found: ${tld}`);
+    }
+  });
 
   // Check for urgency indicators
   const urgencyWords = ['urgent', 'immediately', 'act now', 'expire', 'asap', 'within 24 hours'];

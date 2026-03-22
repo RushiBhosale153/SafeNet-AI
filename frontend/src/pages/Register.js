@@ -50,7 +50,7 @@ const Register = () => {
         <div className="text-center mb-8">
           <FaShieldAlt className="text-6xl text-cyber-blue mx-auto mb-4 animate-pulse-slow" />
           <h2 className="text-3xl font-bold text-cyber-blue font-mono" data-testid="register-title">Create Account</h2>
-          <p className="text-gray-400 mt-2">Join SafeNet AI for advanced security</p>
+          <p className="text-gray-400 mt-2">Join CyberNet AI for advanced security</p>
         </div>
 
         <div className="bg-cyber-darker border-2 border-cyber-blue rounded-lg p-8 shadow-cyber">

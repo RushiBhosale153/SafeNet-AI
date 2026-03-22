@@ -14,12 +14,12 @@ const sendOTPEmail = async (email, otp) => {
     }
 
     const data = await resend.emails.send({
-      from: 'SafeNet AI <onboarding@resend.dev>',
+      from: 'CyberNet AI <onboarding@resend.dev>',
       to: email,
-      subject: 'SafeNet AI - Email Verification Code',
+      subject: 'CyberNet AI - Email Verification Code',
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #000; color: #0ff;">
-          <h1 style="color: #0ff; text-align: center; border-bottom: 2px solid #0ff; padding-bottom: 10px;">SafeNet AI</h1>
+          <h1 style="color: #0ff; text-align: center; border-bottom: 2px solid #0ff; padding-bottom: 10px;">CyberNet AI</h1>
           <h2 style="color: #fff;">Email Verification</h2>
           <p style="color: #ccc; font-size: 16px;">Your verification code is:</p>
           <div style="background-color: #111; border: 2px solid #0ff; border-radius: 8px; padding: 20px; text-align: center; margin: 20px 0;">

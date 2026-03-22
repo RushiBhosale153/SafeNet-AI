@@ -30,7 +30,8 @@ export const scanAPI = {
     headers: { 'Content-Type': 'multipart/form-data' }
   }),
   website: (url) => api.post('/api/scan/website', { url }),
-  leakCheck: (email) => api.post('/api/scan/leak-check', { email })
+  leakCheck: (email) => api.post('/api/scan/leak-check', { email }),
+  unified: (input) => api.post('/api/scan/unified', { input })
 };
 
 // AI API
@@ -41,6 +42,7 @@ export const aiAPI = {
 // History API
 export const historyAPI = {
   getHistory: () => api.get('/api/history'),
+  getStats: () => api.get('/api/history/stats'),
   seedDemo: () => api.post('/api/history/seed-demo')
 };
 

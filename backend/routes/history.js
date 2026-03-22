@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middleware/auth');
 const ScanHistory = require('../models/ScanHistory');
+const mongoose = require('mongoose');
 
 // Get scan history for logged-in user
 router.get('/', authMiddleware, async (req, res) => {
@@ -17,6 +18,40 @@ router.get('/', authMiddleware, async (req, res) => {
   } catch (error) {
     console.error('Fetch history error:', error);
     res.status(500).json({ error: 'Failed to fetch history' });
+  }
+});
+
+// Get scan stats for dashboard
+router.get('/stats', authMiddleware, async (req, res) => {
+  try {
+    const userId = req.userId;
+    
+    const totalScans = await ScanHistory.countDocuments({ userId });
+    const highRisk = await ScanHistory.countDocuments({ userId, riskLevel: { $in: ['high', 'critical', 'malicious'] } });
+    const mediumRisk = await ScanHistory.countDocuments({ userId, riskLevel: { $in: ['medium', 'suspicious'] } });
+    const safeScans = await ScanHistory.countDocuments({ userId, riskLevel: { $in: ['low', 'safe', 'likely safe'] } });
+
+    const distribution = await ScanHistory.aggregate([
+      { $match: { userId: new mongoose.Types.ObjectId(userId) } },
+      { $group: { _id: "$scanType", count: { $sum: 1 } } }
+    ]);
+
+    res.json({
+      success: true,
+      stats: {
+        totalScans,
+        highRisk,
+        mediumRisk,
+        safeScans,
+        distribution: distribution.reduce((acc, curr) => {
+          acc[curr._id] = curr.count;
+          return acc;
+        }, {})
+      }
+    });
+  } catch (error) {
+    console.error('Fetch stats error:', error);
+    res.status(500).json({ error: 'Failed to fetch dashboard statistics' });
   }
 });
 

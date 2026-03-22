@@ -19,7 +19,7 @@ const checkPhishTank = async (url) => {
       { 
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded',
-          'User-Agent': 'phishtank/SafeNet-AI' 
+          'User-Agent': 'phishtank/CyberNet-AI' 
         },
         timeout: 10000 
       }

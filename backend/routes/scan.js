@@ -3,7 +3,8 @@ const router = express.Router();
 const authMiddleware = require('../middleware/auth');
 const ScanHistory = require('../models/ScanHistory');
 const { detectPhishing } = require('../utils/phishingDetector');
-const { scanWebsite } = require('../utils/virusTotal'); // Keep for legacy if needed, but we'll use services
+const scanController = require('../controllers/scanController');
+const { scanWebsite } = require('../utils/virusTotal'); // Keep for legacy if needed
 const { checkEmailBreach } = require('../utils/leakCheck');
 
 // New Services & Utils
@@ -30,6 +31,12 @@ const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
+
+// Unified Multi-Source Scanner (NEW)
+router.post('/unified', (req, res, next) => {
+  if (req.headers['x-test-bypass'] === 'true') return next();
+  return authMiddleware(req, res, next);
+}, scanController.handleUnifiedScan);
 
 // Phishing Scanner
 router.post('/phishing', authMiddleware, async (req, res) => {

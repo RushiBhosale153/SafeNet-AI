@@ -1,7 +1,7 @@
 {
-  "name": "safenet-ai",
+  "name": "cybernet-ai",
   "version": "1.0.0",
-  "description": "SafeNet AI - Cybersecurity Web Application Backend",
+  "description": "CyberNet AI - Cybersecurity Web Application Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

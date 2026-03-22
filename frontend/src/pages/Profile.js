@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { historyAPI } from '../services/api';
-import { FaUser, FaHistory, FaShieldAlt, FaExclamationTriangle, FaChevronDown, FaBug, FaEnvelope, FaGlobe, FaChevronRight, FaTerminal, FaFilePdf, FaFileCsv, FaFileCode } from 'react-icons/fa';
+import { FaUser, FaHistory, FaShieldAlt, FaExclamationTriangle, FaChevronDown, FaBug, FaEnvelope, FaGlobe, FaChevronRight, FaTerminal, FaFilePdf, FaFileCsv, FaFileCode, FaRobot } from 'react-icons/fa';
 import { MdSecurity } from 'react-icons/md';
 import { motion, AnimatePresence } from 'framer-motion';
 import { exportToPDF, exportToJSON, exportToCSV, normalizeReportData } from '../utils/exportUtils';
@@ -43,27 +43,35 @@ const Profile = () => {
   const toggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
   };
-
   const getRiskColor = (level) => {
     const colors = {
       safe: 'text-cyber-green',
+      'likely safe': 'text-cyber-green',
       low: 'text-yellow-400',
+      'low risk': 'text-yellow-400',
       medium: 'text-orange-400',
+      'medium risk': 'text-orange-400',
+      suspicious: 'text-orange-400',
       high: 'text-cyber-red',
-      critical: 'text-red-600'
+      'high risk': 'text-cyber-red',
+      critical: 'text-red-600',
+      malicious: 'text-red-600'
     };
-    return colors[level] || 'text-gray-400';
+    return colors[level.toLowerCase()] || 'text-gray-400';
   };
 
   const getRiskBorder = (level) => {
     const borders = {
       safe: 'border-cyber-green/30',
+      'likely safe': 'border-cyber-green/30',
       low: 'border-yellow-400/30',
       medium: 'border-orange-400/30',
+      suspicious: 'border-orange-400/30',
       high: 'border-cyber-red/30',
-      critical: 'border-red-600/30'
+      critical: 'border-red-600/30',
+      malicious: 'border-red-600/30'
     };
-    return borders[level] || 'border-gray-600/30';
+    return borders[level.toLowerCase()] || 'border-gray-600/30';
   };
 
   const getScanTypeLabel = (type) => {
@@ -110,7 +118,7 @@ const Profile = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-4">
-            <h4 className="text-[10px] font-bold text-cyber-blue uppercase tracking-widest border-b border-cyber-blue/10 pb-2">Telemetry Findings</h4>
+            <h4 className="text-[10px] font-bold text-cyber-blue uppercase tracking-widest border-b border-cyber-blue/10 pb-2">Technical Telemetry</h4>
             <div className="flex flex-wrap gap-2">
               {data.findings.map((finding, idx) => (
                 <span key={idx} className="text-[9px] bg-white/5 border border-white/10 text-gray-400 px-3 py-1 rounded uppercase font-mono">
@@ -120,10 +128,14 @@ const Profile = () => {
             </div>
           </div>
           <div className="space-y-4">
-            <h4 className="text-[10px] font-bold text-cyber-blue uppercase tracking-widest border-b border-cyber-blue/10 pb-2">AI Protocol Advice</h4>
-            <p className="text-xs text-gray-400 italic leading-relaxed border-l-2 border-cyber-blue pl-4 py-1">
-              {data.advice}
-            </p>
+            <h4 className="text-[10px] font-bold text-cyber-blue uppercase tracking-widest border-b border-cyber-blue/10 pb-2 flex items-center gap-2">
+              <FaRobot /> AI Deep Analysis
+            </h4>
+            <div className="bg-black/40 p-4 rounded-xl border border-white/5 max-h-[200px] overflow-y-auto custom-scrollbar">
+              <p className="text-[11px] text-gray-400 leading-relaxed whitespace-pre-wrap">
+                {item.details?.aiExplanation || data.advice}
+              </p>
+            </div>
           </div>
         </div>
       </div>

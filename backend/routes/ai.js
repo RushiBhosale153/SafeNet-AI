@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const authMiddleware = require('../middleware/auth');
 
-const SYSTEM_PROMPT = `You are a cybersecurity expert assistant for SafeNet AI. Your ONLY purpose is to help users with cybersecurity questions and explain security scan results.
+const SYSTEM_PROMPT = `You are a cybersecurity expert assistant for CyberNet AI. Your ONLY purpose is to help users with cybersecurity questions and explain security scan results.
 
 RULES:
 1. ONLY answer questions related to cybersecurity, information security, privacy, and safety.
@@ -55,8 +55,8 @@ router.post('/chat', authMiddleware, async (req, res) => {
         headers: {
           'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json',
-          'HTTP-Referer': 'https://safenet-ai.com',
-          'X-Title': 'SafeNet AI'
+          'HTTP-Referer': 'https://cybernet-ai.com',
+          'X-Title': 'CyberNet AI'
         }
       }
     );

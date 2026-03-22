@@ -1,6 +1,6 @@
-# 🔑 SafeNet AI Access & User Guide
+# 🔑 CyberNet AI Access & User Guide
 
-This guide explains how to access and utilize the SafeNet AI security modules.
+This guide explains how to access and utilize the CyberNet AI security modules.
 
 ---
 

@@ -36,7 +36,7 @@ const Navbar = () => {
               <div className="absolute inset-0 bg-cyber-blue/20 blur-lg rounded-full group-hover:bg-cyber-green/20 transition-all"></div>
             </div>
             <span className="text-2xl font-bold text-cyber-blue group-hover:text-cyber-green transition-all duration-500 tracking-tighter uppercase">
-              SafeNet <span className="text-white">AI</span>
+              CyberNet <span className="text-white">AI</span>
             </span>
             <div className="absolute -bottom-1 left-0 w-0 h-[2px] bg-gradient-to-r from-cyber-blue to-transparent group-hover:w-full transition-all duration-500"></div>
           </Link>

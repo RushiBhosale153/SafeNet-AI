@@ -14,7 +14,7 @@ const checkGoogleSafeBrowsing = async (url) => {
     const response = await axios.post(
       `https://safebrowsing.googleapis.com/v4/threatMatches:find?key=${apiKey}`,
       {
-        client: { clientId: "safenet-ai", clientVersion: "1.0.0" },
+        client: { clientId: "cybernet-ai", clientVersion: "1.0.0" },
         threatInfo: {
           threatTypes: ["MALWARE", "SOCIAL_ENGINEERING", "UNWANTED_SOFTWARE", "POTENTIALLY_HARMFUL_APPLICATION"],
           platformTypes: ["ANY_PLATFORM"],
@@ -25,7 +25,7 @@ const checkGoogleSafeBrowsing = async (url) => {
       { 
         headers: { 
           'Content-Type': 'application/json',
-          'User-Agent': 'SafeNet-AI/1.0.0'
+          'User-Agent': 'CyberNet-AI/1.0.0'
         },
         timeout: 10000 
       }

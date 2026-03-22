@@ -1,8 +1,8 @@
-# 📊 Project Summary: SafeNet AI
+# 📊 Project Summary: CyberNet AI
 
 ## 📝 Executive Overview
 
-SafeNet AI is a high-performance cybersecurity platform that democratizes threat intelligence. It provides individuals and small teams with tools previously reserved for enterprise SOC environments, enabling real-time detection of phishing, malware, and credential exposures.
+CyberNet AI is a high-performance cybersecurity platform that democratizes threat intelligence. It provides individuals and small teams with tools previously reserved for enterprise SOC environments, enabling real-time detection of phishing, malware, and credential exposures.
 
 ---
 
@@ -33,4 +33,4 @@ SafeNet AI is a high-performance cybersecurity platform that democratizes threat
 - **Resiliency**: Robust error handling at every service layer prevents partial API failures from crashing the app.
 
 ---
-*SafeNet AI – Turning telemetry into transparency.*
+*CyberNet AI – Turning telemetry into transparency.*

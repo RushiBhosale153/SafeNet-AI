@@ -45,7 +45,7 @@ const Login = () => {
         <div className="text-center mb-8">
           <FaShieldAlt className="text-6xl text-cyber-blue mx-auto mb-4 animate-pulse-slow" />
           <h2 className="text-3xl font-bold text-cyber-blue font-mono" data-testid="login-title">Welcome Back</h2>
-          <p className="text-gray-400 mt-2">Login to SafeNet AI</p>
+          <p className="text-gray-400 mt-2">Login to CyberNet AI</p>
         </div>
 
         <div className="bg-cyber-darker border-2 border-cyber-blue rounded-lg p-8 shadow-cyber">

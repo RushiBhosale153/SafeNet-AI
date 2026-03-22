@@ -59,10 +59,13 @@ export const normalizeReportData = (item) => {
       totalHits: threatsCount,
       malicious: raw.maliciousCount ?? 0,
       suspicious: raw.suspiciousCount ?? 0,
-      engines: raw.totalEngines ?? 0
+      engines: raw.totalEngines ?? 0,
+      confidenceScore: raw.confidence?.score ?? 100,
+      confidenceLevel: raw.confidence?.level ?? 'N/A'
     },
     findings: findings.length > 0 ? findings : ['None Identified'],
     advice: raw.advice || 'No automated recommendations available.',
+    aiExplanation: raw.aiExplanation || null,
     raw: raw // Keep raw data for JSON export
   };
 };
@@ -215,9 +218,10 @@ export const exportToPDF = (item) => {
     
     const technicalData = [
       ['Metric', 'Value'],
-      ['Risk Confidence', data.riskScore],
+      ['Risk Confidence Score', data.riskScore],
+      ['Intelligence Confidence', `${data.metrics.confidenceScore}% (${data.metrics.confidenceLevel})`],
       ['Threat Magnitude', data.metrics.totalHits],
-      ['Anomalous Signals', (data.findings || []).join(', ')]
+      ['Anomalous Signals', (data.findings || []).join(', ').substring(0, 100) + (data.findings.join(', ').length > 100 ? '...' : '')]
     ];
 
     if (typeof autoTable === 'function') {
@@ -238,14 +242,35 @@ export const exportToPDF = (item) => {
       currentY += (technicalData.length * 7) + 20;
     }
 
-    // Section 3: Protocol Advice
+    // Section 3: AI SECURITY INSIGHTS
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text('3. AI PROTOCOL RECOMMENDATIONS', 20, currentY);
+    doc.text('3. AI SECURITY INSIGHTS', 20, currentY);
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(60, 60, 60);
+    const aiText = data.aiExplanation || data.advice;
+    const splitAi = doc.splitTextToSize(aiText, 170);
+    doc.text(splitAi, 20, currentY + 8);
+    
+    currentY += (splitAi.length * 5) + 20;
+
+    // Check if we need a new page for advice
+    if (currentY > 250) {
+      doc.addPage();
+      currentY = 30;
+    }
+
+    // Section 4: PROTOCOL ADVICE
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text('4. OPERATIONAL ADVICE', 20, currentY);
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'italic');
-    doc.setTextColor(100, 100, 100);
+    doc.setTextColor(10, 100, 10);
     const splitAdvice = doc.splitTextToSize(data.advice, 170);
     doc.text(splitAdvice, 20, currentY + 8);
 
