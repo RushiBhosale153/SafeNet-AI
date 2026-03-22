@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaRobot, FaInfoCircle, FaExclamationTriangle } from 'react-icons/fa';
+import { FaRobot, FaInfoCircle } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 
 const AiSummary = ({ explanation, riskLevel }) => {

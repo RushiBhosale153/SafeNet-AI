@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { scanAPI } from '../services/api';
-import { FaShieldAlt, FaSearch, FaExclamationTriangle, FaCheckCircle, FaRobot, FaInfoCircle, FaLink, FaFilePdf } from 'react-icons/fa';
+import { FaShieldAlt, FaSearch, FaExclamationTriangle, FaRobot, FaInfoCircle, FaLink, FaFilePdf } from 'react-icons/fa';
 import { exportToPDF } from '../utils/exportUtils';
 import { motion, AnimatePresence } from 'framer-motion';
 import AiSummary from '../components/AiSummary';
@@ -11,7 +10,7 @@ const Home = () => {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('scan'); // 'scan' or 'recent'
+
   
   const handleUnifiedScan = async (e) => {
     e.preventDefault();

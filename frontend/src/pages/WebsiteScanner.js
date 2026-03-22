@@ -46,16 +46,7 @@ const WebsiteScanner = () => {
     }
   };
 
-  const getSourceIcon = (source) => {
-    switch(source) {
-      case 'virustotal': return <FaShieldAlt className="text-cyber-blue" />;
-      case 'googleSafeBrowsing': return <FaGlobe className="text-cyber-blue" />;
-      case 'urlscan': return <FaSearch className="text-cyber-blue" />;
-      case 'phishTank': return <FaBug className="text-cyber-blue" />;
-      case 'abuseIpdb': return <FaServer className="text-cyber-blue" />;
-      default: return <FaInfoCircle className="text-cyber-blue" />;
-    }
-  };
+
 
   return (
     <div className="min-h-screen bg-cyber-black pb-20 text-white">

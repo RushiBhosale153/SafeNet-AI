@@ -29,7 +29,7 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  const COLORS = ['#00ffff', '#ff00ff', '#00ff00', '#ff0000'];
+
 
   const chartData = stats ? Object.entries(stats.distribution).map(([name, value]) => ({
     name: name.toUpperCase(),
