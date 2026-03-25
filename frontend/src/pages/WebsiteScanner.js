@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { scanAPI } from '../services/api';
 import { 
-  FaGlobe, FaExclamationTriangle, FaSearch, 
-  FaFilePdf, FaShieldAlt,
-  FaServer, FaBug, FaInfoCircle, FaLink, FaRobot
+  FaGlobe, FaExclamationTriangle,
+  FaFilePdf,
+  FaLink, FaRobot
 } from 'react-icons/fa';
 import { exportToPDF } from '../utils/exportUtils';
 import { motion, AnimatePresence } from 'framer-motion';
